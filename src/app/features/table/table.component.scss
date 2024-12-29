@@ -1,0 +1,28 @@
+.table-container {
+  padding: 16px; /* Додаємо відступи навколо таблиці */
+  overflow-x: auto; /* Забезпечує горизонтальний скрол при переповненні */
+}
+
+table {
+  width: 100%; /* Таблиця займає всю ширину контейнера */
+  min-width: 600px; /* Мінімальна ширина таблиці для кращого вигляду */
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px; /* Відступи всередині комірок */
+}
+
+th {
+  background-color: #f5f5f5; /* Легка заливка для хедерів */
+  font-weight: bold;
+}
+
+td {
+  white-space: nowrap; /* Уникнення переносу тексту в комірках */
+}
+
+button {
+  margin-top: 16px; /* Відступ для кнопки від таблиці */
+}

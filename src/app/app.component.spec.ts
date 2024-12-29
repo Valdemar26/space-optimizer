@@ -17,13 +17,13 @@ describe('AppComponent', () => {
   it(`should have the 'space-optiizer' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('space-optiizer');
+    expect(app.title).toEqual('space-optimizer');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, space-optiizer');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, space-optimizer');
   });
 });

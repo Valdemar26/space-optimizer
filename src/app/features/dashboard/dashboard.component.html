@@ -1,6 +1,15 @@
-<div>
-  <h2>Usage Statistics</h2>
-  <!-- Placeholders for charts -->
-  <div id="pie-chart"></div>
-  <div id="line-chart"></div>
+<div class="stats-grid">
+  <div class="stat-card">
+    <h3>Occupied Rooms</h3>
+    <p>{{ occupiedCount }}</p>
+  </div>
+  <div class="stat-card">
+    <h3>Free Rooms</h3>
+    <p>{{ freeCount }}</p>
+  </div>
+</div>
+
+<div class="charts">
+  <div class="chart" id="pie-chart"></div>
+  <div class="chart" id="line-chart"></div>
 </div>
