@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectFreeRooms, selectOccupiedRooms } from '../store/selectors/room.selectors';
+import {selectAllRooms, selectFreeRooms, selectOccupiedRooms} from '../store/selectors/room.selectors';
 import { IRoom } from '../models/room.model';
+import {loadRooms} from '../store/actions/room.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly store: Store,
     ) {
+    this.store.dispatch(loadRooms());
     this.occupiedRooms$ = this.store.select(selectOccupiedRooms);
     this.freeRooms$ = this.store.select(selectFreeRooms);
   }
@@ -32,13 +34,13 @@ export class DashboardComponent implements OnInit {
 
     this.occupiedRooms$.subscribe((rooms: IRoom[]) => {
       console.log('rooms: ', rooms);
-      // this.occupiedCount = rooms.length;
-      // this.updateChart();
+      this.occupiedCount = rooms.length;
+      this.updateChart();
     });
 
     this.freeRooms$.subscribe((rooms: IRoom[]) => {
-      // this.freeCount = rooms.length;
-      // this.updateChart();
+      this.freeCount = rooms.length;
+      this.updateChart();
     });
 
     this.initPieChart();

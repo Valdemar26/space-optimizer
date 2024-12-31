@@ -1,25 +1,19 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { RoomState } from '../reducers/room.reducer';
-import { IRoom } from '../../models/room.model';
+import { IRoom, RoomStatus } from '../../models/room.model';
 
 export const selectRoomsFeature = createFeatureSelector<RoomState>('rooms');
 
 export const selectAllRooms = createSelector(
   selectRoomsFeature,
-  (state) => {
-    console.log('state: ', state);
-    return state.rooms
-  }
+  (state) => state.rooms
 );
 
 export const selectOccupiedRooms = createSelector(selectAllRooms, (rooms: IRoom[]) =>
-{
-  console.log('selectOccupiedRooms: ', rooms);
-  return rooms.filter((room: IRoom) => room.status === 'occupied')
-}
+  rooms.filter((room: IRoom) => room.status === RoomStatus.OCCUPIED)
 );
 
 export const selectFreeRooms = createSelector(selectAllRooms, (rooms: IRoom[]) =>
-  rooms.filter((room: IRoom) => room.status === 'available')
+  rooms.filter((room: IRoom) => room.status === RoomStatus.AVAILABLE)
 );
 

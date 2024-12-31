@@ -26,3 +26,25 @@ td {
 button {
   margin-top: 16px; /* Відступ для кнопки від таблиці */
 }
+
+.status-cell {
+  padding: 8px;
+}
+
+.status-container {
+  display: flex;
+  align-items: center; /* Вирівнювання по вертикалі */
+  gap: 8px; /* Відступ між текстом і іконкою */
+}
+
+.status-icon {
+  font-size: 20px; /* Розмір іконки */
+}
+
+.status-icon.occupied {
+  color: red; /* Червона іконка для occupied */
+}
+
+.status-icon.available {
+  color: green; /* Зелена іконка для available */
+}
