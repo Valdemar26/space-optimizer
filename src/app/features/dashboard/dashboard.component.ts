@@ -1,39 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Chart, registerables } from 'chart.js';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import {selectAllRooms, selectFreeRooms, selectOccupiedRooms} from '../store/selectors/room.selectors';
+import { selectFreeRooms, selectOccupiedRooms } from '../store/selectors/room.selectors';
 import { IRoom } from '../models/room.model';
-import {loadRooms} from '../store/actions/room.actions';
+import { loadRooms } from '../store/actions/room.actions';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   occupiedRooms$!: Observable<IRoom[]>;
   freeRooms$!: Observable<IRoom[]>;
   chart: any;
   occupiedCount: number = 0;
   freeCount: number = 0;
 
-  constructor(
-    private readonly store: Store,
-    ) {
+  constructor(private readonly store: Store) {
     this.store.dispatch(loadRooms());
     this.occupiedRooms$ = this.store.select(selectOccupiedRooms);
     this.freeRooms$ = this.store.select(selectFreeRooms);
+
+    Chart.register(...registerables);
   }
 
   public ngOnInit(): void {
-    this.store.select(selectOccupiedRooms).subscribe(occupiedRooms => console.log('DashboardComponent occupiedRooms: ', occupiedRooms));
-
-
-
     this.occupiedRooms$.subscribe((rooms: IRoom[]) => {
-      console.log('rooms: ', rooms);
       this.occupiedCount = rooms.length;
       this.updateChart();
     });
@@ -42,14 +36,17 @@ export class DashboardComponent implements OnInit {
       this.freeCount = rooms.length;
       this.updateChart();
     });
+  }
 
+  public ngAfterViewInit(): void {
     this.initPieChart();
+    this.initLineChart();
   }
 
   private initPieChart(): void {
-    console.log('initPieChart: ', this.occupiedCount, this.freeCount);
-    if (this.occupiedCount && this.freeCount) {
-      this.chart = new Chart('pie-chart', {
+    const canvas = document.getElementById('pie-chart') as HTMLCanvasElement;
+    if (canvas && this.occupiedCount + this.freeCount > 0) {
+      this.chart = new Chart(canvas.getContext('2d')!, {
         type: 'pie',
         data: {
           labels: ['Occupied', 'Free'],
@@ -59,6 +56,56 @@ export class DashboardComponent implements OnInit {
               backgroundColor: ['#FF6384', '#36A2EB'],
             },
           ],
+        },
+      });
+    }
+  }
+
+  private initLineChart(): void {
+    const canvas = document.getElementById('line-chart') as HTMLCanvasElement;
+    if (canvas) {
+      new Chart(canvas.getContext('2d')!, {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June'], // TODO need to change to some real data
+          datasets: [
+            {
+              label: 'Occupied Rooms',
+              data: [65, 59, 80, 81, 56, 55], // TODO need to change to some real data
+              borderColor: '#FF6384',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              fill: true,
+            },
+            {
+              label: 'Free Rooms',
+              data: [35, 41, 20, 19, 44, 45], // TODO need to change to some real data
+              borderColor: '#36A2EB',
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Months',
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Number of Rooms',
+              },
+            },
+          },
         },
       });
     }

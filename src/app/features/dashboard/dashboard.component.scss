@@ -1,0 +1,30 @@
+.dashboard-wrapper {
+  padding: 5px 10px;
+
+  .stats-grid {
+    display: flex;
+    gap: 16px;
+    margin: 24px 0;
+
+    .stat-card {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  .charts {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+
+    .chart {
+      max-width: 400px;
+      max-height: 400px;
+    }
+  }
+}

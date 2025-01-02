@@ -1,15 +1,17 @@
-<div class="stats-grid">
-  <div class="stat-card">
-    <h3>Occupied Rooms</h3>
-    <p>{{ occupiedCount }}</p>
+<div class="dashboard-wrapper">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Occupied Rooms</h3>
+      <p>{{ occupiedCount }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Free Rooms</h3>
+      <p>{{ freeCount }}</p>
+    </div>
   </div>
-  <div class="stat-card">
-    <h3>Free Rooms</h3>
-    <p>{{ freeCount }}</p>
-  </div>
-</div>
 
-<div class="charts">
-  <div class="chart" id="pie-chart"></div>
-  <div class="chart" id="line-chart"></div>
+  <div class="charts">
+    <canvas id="pie-chart" class="chart"></canvas>
+    <canvas id="line-chart" class="chart"></canvas>
+  </div>
 </div>
