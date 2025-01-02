@@ -65,7 +65,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private updateChart(): void {
-    // Оновлюємо чарт після зміни кількості кімнат
     if (this.chart) {
       this.chart.data.datasets[0].data = [this.occupiedCount, this.freeCount];
       this.chart.update();
