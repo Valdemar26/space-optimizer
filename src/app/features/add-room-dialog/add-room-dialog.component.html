@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Add New Room</h2>
+<mat-dialog-content>
+  <form [formGroup]="roomForm" class="add-room-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Room Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="roomForm.get('name')?.hasError('required')">
+        Room name is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Room Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of roomTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="roomForm.get('type')?.hasError('required')">
+        Room type is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Room Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of roomStatuses" [value]="status">{{ status }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="roomForm.get('status')?.hasError('required')">
+        Room status is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button [disabled]="roomForm.invalid" (click)="onSubmit()">
+    Add Room
+  </button>
+</mat-dialog-actions>

@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoomService } from '../../core/services/room.service';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { IRoom, RoomStatus } from '../models/room.model';
-import { Store } from '@ngrx/store';
-import {addRoom, loadRooms} from '../store/actions/room.actions';
-import { Observable } from 'rxjs';
-import { selectAllRooms } from '../store/selectors/room.selectors';
+import { NgIf } from '@angular/common';
 import {
   MatCell,
   MatCellDef,
@@ -20,7 +14,15 @@ import {
 } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { IRoom, RoomStatus } from '../models/room.model';
+import { Store } from '@ngrx/store';
+import { addRoom, loadRooms } from '../store/actions/room.actions';
+import { Observable } from 'rxjs';
+import { selectAllRooms } from '../store/selectors/room.selectors';
+import { AddRoomDialogComponent } from '../add-room-dialog/add-room-dialog.component';
 
 @Component({
   selector: 'app-table',
@@ -37,7 +39,9 @@ import { MatIcon } from '@angular/material/icon';
     MatCellDef,
     MatButton,
     MatIcon,
-    NgIf
+    NgIf,
+    ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
@@ -45,11 +49,12 @@ import { MatIcon } from '@angular/material/icon';
 export class TableComponent implements OnInit {
   public rooms$!: Observable<IRoom[]>;
 
-  displayedColumns: string[] = ['position', 'name', 'type', 'status'];
+  public displayedColumns: string[] = ['position', 'name', 'type', 'status'];
   public readonly RoomStatus = RoomStatus;
 
   constructor(
     private readonly store: Store,
+    private dialog: MatDialog,
     ) {
   }
 
@@ -58,9 +63,16 @@ export class TableComponent implements OnInit {
     this.rooms$ = this.store.select(selectAllRooms);
   }
 
-  addNewRoom() {
-    const newRoom: IRoom = { id: 7, name: 'Room 101', type: 'Deluxe', status: RoomStatus.AVAILABLE };
-    this.store.dispatch(addRoom({ room: newRoom }));
+  public openAddRoomDialog(): void {
+    const dialogRef = this.dialog.open(AddRoomDialogComponent, {
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: IRoom | undefined) => {
+      if (result) {
+        this.store.dispatch(addRoom({ room: result }));
+      }
+    });
   }
 
 }
