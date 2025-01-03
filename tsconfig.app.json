@@ -9,6 +9,10 @@
   "files": [
     "src/main.ts"
   ],
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "standalone": true
+  },
   "include": [
     "src/**/*.d.ts"
   ]

@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -15,6 +16,7 @@
     "@angular/common": "^19.0.5",
     "@angular/compiler": "^19.0.0",
     "@angular/core": "^19.0.0",
+    "@angular/fire": "^18.0.1",
     "@angular/forms": "^19.0.0",
     "@angular/material": "^19.0.4",
     "@angular/platform-browser": "^19.0.0",

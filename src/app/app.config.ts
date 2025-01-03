@@ -1,6 +1,9 @@
 import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { firebaseConfig } from '../environments/environment.firebase';
+
 import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -16,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideStore(),
     provideState('roomFeature', reducers),
     provideEffects([RoomEffects]),
