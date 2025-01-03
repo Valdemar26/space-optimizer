@@ -7,10 +7,9 @@
 /bazel-out
 
 # Node
-/node_modules
-npm-debug.log
-yarn-error.log
-room-server/node_modules
+node_modules
+node_modules/
+package-lock.json
 
 # IDEs and editors
 .idea/

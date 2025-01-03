@@ -19,7 +19,7 @@ export class RoomEffects {
     this.actions$.pipe(
       ofType(loadRooms),
       mergeMap(() =>
-        this.roomService.getRooms().pipe(
+        this.roomService.loadRooms().pipe(
           map((rooms: IRoom[]) => loadRoomsSuccess({ rooms })),
           catchError((error) => of(loadRoomsFailure({ error })))
         )
