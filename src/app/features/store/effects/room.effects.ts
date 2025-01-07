@@ -6,7 +6,7 @@ import { RoomService } from '../../../core/services/room.service';
 import {
   addRoom,
   addRoomFailure,
-  addRoomSuccess,
+  addRoomSuccess, deleteRoom, deleteRoomFailure, deleteRoomSuccess,
   loadRooms,
   loadRoomsFailure,
   loadRoomsSuccess
@@ -34,6 +34,18 @@ export class RoomEffects {
         this.roomService.addRoom(room).pipe(
           map((addedRoom: IRoom) => addRoomSuccess({ room: addedRoom })),
           catchError((error) => of(addRoomFailure({ error })))
+        )
+      )
+    )
+  );
+
+  deleteRoom$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteRoom),
+      mergeMap(({ roomId }) =>
+        this.roomService.deleteRoom(roomId).pipe(
+          map(() => deleteRoomSuccess({ roomId })),
+          catchError((error) => of(deleteRoomFailure({ error })))
         )
       )
     )
