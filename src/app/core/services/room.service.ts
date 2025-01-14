@@ -35,9 +35,17 @@ export class RoomService {
       tap((rooms) => {
         this.roomsSignal.set(rooms);
         if (navigator.onLine) {
-          this.http.get<IRoom[]>('/api/rooms').subscribe((apiRooms) => {
-            this.roomsSignal.set(apiRooms);
-            this.syncDB(apiRooms); // Синхронізація з IndexedDB
+          this.http.get<IRoom[]>('/api/rooms').pipe(
+            catchError((err) => {
+              console.error('Failed to fetch rooms-11111:', err);
+              return of([]);
+            })
+          ).subscribe((apiRooms) => {
+            console.log('apiRooms: ', apiRooms);
+            if (apiRooms.length > 0) {
+              this.roomsSignal.set(apiRooms);
+              this.syncDB(apiRooms); // Sync with IndexedDB
+            }
           });
         }
       })

@@ -9,6 +9,22 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
+// Clear Service worker outdated cache
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', function () {
+//     navigator.serviceWorker.register('/service-worker.js');
+//
+//     navigator.serviceWorker.getRegistrations().then((registrations) => {
+//       registrations.forEach((registration) => registration.unregister());
+//     });
+//   });
+// }
+
 const ROOMS_FILE = path.join(__dirname, 'rooms.json');
 
 // Utility function: Read rooms from file

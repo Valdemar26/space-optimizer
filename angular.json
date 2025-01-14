@@ -29,6 +29,7 @@
                 "input": "public"
               },
               "src/assets",
+              "src/favicon.ico",
               "src/manifest.webmanifest"
             ],
             "styles": [
@@ -97,6 +98,7 @@
                 "input": "public"
               },
               "src/assets",
+              "src/favicon.ico",
               "src/manifest.webmanifest"
             ],
             "styles": [
